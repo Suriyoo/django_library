@@ -27,7 +27,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
-urlpatterns += [
+urlpatterns += [#每当遇到导入函数时django.urls.include()，它都会在指定的结束字符处拆分 URL 字符串，并将剩余的子字符串发送到包含的URLConf模块进行进一步处理
     path('catalog/', include('catalog.urls')),
 ]
 #将第一个参数留空，以暗示 '/'。如果将第一个参数写为 '/'，Django 会在启动开发服务器时给出警告
@@ -36,3 +36,8 @@ urlpatterns += [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Add Django site authentication urls (for login, logout, password management) 会一次性引入 Django 内置的所有认证相关 URL 路由
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
