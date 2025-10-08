@@ -1,0 +1,6 @@
+dj_admin/SZ@gmail.com/666abcab --super
+
+Michael/libuser01
+Jenny/libuser02
+Tony/libuser03 --admin
+William/libuser04 --operator

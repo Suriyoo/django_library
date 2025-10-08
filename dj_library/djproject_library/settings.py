@@ -11,22 +11,29 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os # needed by code below
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Support env variables from .env file if defined
+import os
+from dotenv import load_dotenv
+env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
+load_dotenv(env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #Django网站安全策略中使用的密钥。如在开发环境中没有保护此代码，则在生产环境中需要使用其他代码（如从环境变量或文件中读取）
-SECRET_KEY = 'django-insecure-lliuagoezzxqgd#%wq^utr3_so4uf#dn@fw#l0os9f5%=sk__-'
+#SECRET_KEY = 'django-insecure-lliuagoezzxqgd#%wq^utr3_so4uf#dn@fw#l0os9f5%=sk__-'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-lliuagoezzxqgd#%wq^utr3_so4uf#dn@fw#l0os9f5%=sk__-')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #允许在发生错误时显示调试日志，而不是HTTP状态码。生产环境用False，因为调试信息对攻击者很有用，但目前可以设置为True
-DEBUG = True
-
+#DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = []
 
 
@@ -34,8 +41,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.auth', #Core authentication framework and its default models.
+    'django.contrib.contenttypes',  #content type system (allows permissions to be associated with models).
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -45,10 +52,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # Manages sessions across requests
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Associates users with requests using sessions.
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -58,7 +65,7 @@ ROOT_URLCONF = 'djproject_library.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,3 +132,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+#fake email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
