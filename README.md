@@ -1,5 +1,5 @@
 # django_library
-django, python 基础功能简易模板
+django, python learning version
 
 
 ------项目文件--------
