@@ -1,6 +1,6 @@
 # django_library
 django, python learning version
-
+https://django-library-1779.onrender.com/
 
 ------项目文件--------
 
