@@ -1,3 +1,5 @@
 Django==4.2.23
 python-dotenv
 gunicorn
+psycopg2-binary
+dj-database-url
