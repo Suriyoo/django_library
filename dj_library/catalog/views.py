@@ -115,7 +115,16 @@ class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
     
+class GenreListView(generic.ListView):
+    model = Genre
+    context_object_name = 'genre_list'
+    template_name = 'catalog/genre_list.html'
 
+
+class LanguageListView(generic.ListView):
+    model = Language
+    context_object_name = 'language_list'
+    template_name = 'catalog/language_list.html'
 
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView #CreateView Django 内置的通用视图，用于处理模型实例的创建（渲染表单、验证数据、保存到数据库）
@@ -154,10 +163,17 @@ class GenreCreate(PermissionRequiredMixin, CreateView):
     fields = ['name', ]
     permission_required = 'catalog.add_genre'
 
+class GenreDetailView(generic.DetailView):
+    model = Genre
+
 class LanguageCreate(PermissionRequiredMixin, CreateView):
     model = Language
     fields = ['name', ]
     permission_required = 'catalog.add_language'
+
+class LanguageDetailView(generic.DetailView):
+    model = Language
+
 
 class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
