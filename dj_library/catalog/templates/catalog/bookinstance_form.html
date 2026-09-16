@@ -1,0 +1,57 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Create a copy of a book</h1>
+
+<p>Add a new physical copy of a book to the library.</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div>
+        <label for="{{ form.book.id_for_label }}">Book:</label>
+        {{ form.book }}
+    </div>
+
+    <br>
+
+    <div>
+        <label for="{{ form.status.id_for_label }}">Status:</label>
+        {{ form.status }}
+    </div>
+
+    <br>
+
+    <div id="due-back-field">
+        <label for="{{ form.due_back.id_for_label }}">Due back:</label>
+        {{ form.due_back }}
+    </div>
+
+    <br>
+
+    <input type="submit" value="Create copy">
+</form>
+
+<script>
+    const statusField = document.getElementById("{{ form.status.id_for_label }}");
+    const dueBackField = document.getElementById("due-back-field");
+    const dueBackInput = document.getElementById("{{ form.due_back.id_for_label }}");
+
+    function updateDueBackField() {
+        if (statusField.value === "o") {
+            dueBackField.style.display = "block";
+            dueBackInput.required = true;
+        } else {
+            dueBackField.style.display = "none";
+            dueBackInput.required = false;
+            dueBackInput.value = "";
+        }
+    }
+
+    statusField.addEventListener("change", updateDueBackField);
+
+    updateDueBackField();
+</script>
+
+{% endblock %}
