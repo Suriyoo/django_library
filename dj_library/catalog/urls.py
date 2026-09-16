@@ -10,6 +10,8 @@ urlpatterns = [
      path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'), #'<int:pk>'获取书籍 ID，该 ID 必须是特殊格式的字符串，并将其作为主键传给视图
      path('author', views.AuthorListView.as_view(), name='authors'),
      path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
+     path('genres/', views.GenreListView.as_view(), name='genre-list'),
+     path('languages/', views.LanguageListView.as_view(), name='language-list'),
 ]
 
 
@@ -29,11 +31,11 @@ urlpatterns +=[
 ]
 urlpatterns +=[
     path('genre/create/', views.GenreCreate.as_view(), name='genre-create'),
-    
+    path('genre/<int:pk>/', views.GenreDetailView.as_view(), name='genre-detail'),
 ]
 urlpatterns +=[
     path('language/create/', views.LanguageCreate.as_view(), name='language-create'),
-    
+    path('language/<int:pk>/', views.LanguageDetailView.as_view(), name='language-detail'),
 ]
 urlpatterns +=[
     path('author/create/', views.AuthorCreate.as_view(), name='author-create'),
