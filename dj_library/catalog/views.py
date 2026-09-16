@@ -204,10 +204,12 @@ class AuthorDelete(PermissionRequiredMixin, DeleteView):
                 reverse("author-delete", kwargs={"pk": self.object.pk})
             )
         
+from django.urls import reverse_lazy       
 class BookInstanceCreate(PermissionRequiredMixin, CreateView):
     model = BookInstance
-    fields = ['name', ]
+    fields = ['book', 'status', 'due_back']
     permission_required = 'catalog.add_bookinstance'
+    success_url = reverse_lazy('books')
 
 
 import datetime
